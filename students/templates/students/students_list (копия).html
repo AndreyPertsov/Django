@@ -1,0 +1,138 @@
+{% load static from staticfiles %}
+
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8"/>
+    <title>Сервіс Обліку Студентів</title>
+    <meta name="description"
+        value="Система Обліку Студентів Навчального Закладу" />
+    <!-- Include Styles -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <!-- <style type="text/css">.col-xs-12, .col-xs-4, .col-xs-8 {border:1px solid red;}</style>-->
+    <link rel="stylesheet" href="{% static "css/main.css" %}">
+</head>
+<body>
+<!-- Start Container -->
+<div class="container">
+<!-- Start Header -->
+    <div class="row" id="header">
+    <!-- Logo -->
+        <div class="col-xs-8">
+            <h1>Сервіс Обліку Студентів</h1>
+        </div>
+        <!-- Groups Selector -->
+        <div class="col-xs-4" id="group-selector">
+           <strong>Група:</strong>
+                <select>
+                    <option value="">Усі Студенти</option>
+                    <option value="">МтМ - 21, Подоба Віталій(No 254)</option>
+                    <option value="">МтМ - 22, Корост Андрій(No 2123)</option>
+                    <option value="">МтМ - 23, Ляшко Петро(No 1541)</option>
+                </select>
+        </div>
+    </div>
+<!-- End Header -->
+<!-- Start SubHeader -->
+    <div class="row" id="sub-header">
+        <div class="col-xs-12">
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href= "{% url "home" %}">Студенти</a></li>
+                <li role="presentation"><a href="/journal">Відвідування</a></li>
+                <li role="presentation"><a href="{% url "groups" %}">Групи</a></li>
+            </ul>
+        </div>
+    </div>
+<!-- End SubHeader -->
+<!-- Start Main Page Content -->
+    <div class="row" id="content-columns">
+        <div class="col-xs-12" id="content-column">
+            <!-- Status Message -->
+            <div class="alert alert-warning">Зміни скасовано.</div>
+            <div class="row">
+                <div class="col-xs-5"><h2>База Студентів</h2></div>
+                <div class="col-xs-5"><!-- Add Student Button -->
+            <h3><a class="btn btn-primary" href="{% url "students_add" %}">Додати Студента</a></h3></div>
+
+            </div>
+
+
+            <div><!-- Start Students Listing -->
+                <table class="table table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>No </th>
+                            <th>Фото</th>
+                            <th><a href="">Прізвище &uarr;</a></th>
+                            <th><a href="#">Ім'я &uarr;</a></th>
+                            <th><a href="#">No Білету &uarr;</a></th>
+                            <th>Дії</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for student in students %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td><img class="img-circle" src="{% static student.image %}" height="30" width="30" /></td>
+                            <td><a href="{% url "students_edit" student.id %}"> {{ student.last_name }}</td>
+                            <td><a href="{% url "students_edit" student.id %}"> {{ student.first_name }}</td>
+                            <td>{{ student.ticket }}</td>
+                            <td>
+                                <div class="btn-group">
+                                    <button class="btn btn-default dropdown-toggle"
+                                        type="button" data-toggle="dropdown">Дія
+                                    <span class="caret"></span>
+                                    </button>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li><a href="{% url "students_edit" student.id %}" target="_blank">Редагувати</a></li>
+                                            <li><a href="/journal/{{ student.id }}" target="_blank">Відвідування</a></li>
+                                            <li><a href="{% url "students_delete" student.id %}">Видалити</a></li>
+                                        </ul>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+
+                    </tbody>
+                </table>
+                    <!-- End Students Listing -->
+            </div>
+        </div>
+    </div>
+<!-- End Main Page Content -->
+<nav>
+  <ul class="pagination">
+    <li>
+      <a href="#" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
+    <li><a href="#">2</a></li>
+    <li><a href="#">3</a></li>
+    <li><a href="#">4</a></li>
+    <li><a href="#">5</a></li>
+    <li>
+      <a href="#" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</nav>
+<!-- Start Footer -->
+    <div class="row" id="footer">
+        <div class="col-xs-12">&copy; 2016 Сервіс Обліку Студентів</div>
+    </div>
+<!-- End Footer -->
+<!-- End Container -->
+</div>
+
+    <!-- Javascripts Section -->
+    <script src="https://code.jquery.com/jquery-2.2.4.js"
+        integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
+			  crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>
