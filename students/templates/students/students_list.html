@@ -8,13 +8,10 @@
 
 {% block content %}
 
-            <div class="row">
-                <div class="col-xs-5"><h2>База Студентів</h2></div>
-                <div class="col-xs-5">
+
 <!-- Add Student Button -->
             <h3><a class="btn btn-primary" href="{% url "students_add" %}">Додати Студента</a></h3>
-                </div>
-            </div>
+
 
 
 <!-- Start Students Listing -->
@@ -56,24 +53,7 @@
                 </table>
 <!-- End Students Listing -->
 
-<nav>
-  <ul class="pagination">
-    <li>
-      <a href="#" aria-label="Previous">
-        <span aria-hidden="true">&laquo;</span>
-      </a>
-    </li>
-    <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
-    <li><a href="#">2</a></li>
-    <li><a href="#">3</a></li>
-    <li><a href="#">4</a></li>
-    <li><a href="#">5</a></li>
-    <li>
-      <a href="#" aria-label="Next">
-        <span aria-hidden="true">&raquo;</span>
-      </a>
-    </li>
-  </ul>
-</nav>
+<!-- pagination -->
+{% include "students/includes/pagination.html" %}
 
 {% endblock content %}
