@@ -22,6 +22,7 @@ from .settings import MEDIA_ROOT, DEBUG
 urlpatterns = patterns('',
 
 # Students urls
+#contains raw string'Regular Expr.', directory path, name for the Views
 url(r'^$', 'students.views.students.students_list', name='home'),
 url(r'^students/add/$', 'students.views.students.students_add', name='students_add'),
 url(r'^students/(?P<sid>\d+)/edit/$', 'students.views.students.students_edit', name='students_edit'),
@@ -36,10 +37,12 @@ url(r'^groups/(?P<gid>\d+)/delete/$', 'students.views.groups.groups_delete', nam
 #Journal urls
 url(r'^journal/$', 'students.views.journal.journal', name='journal'),
 
+#Admin urls
 url(r'^admin/', include(admin.site.urls)),
 )
 
 
+#!!!!!
 if DEBUG:
     # serve files from media folder
     urlpatterns += patterns('', url(r'^media/(?P<path>.*)$', 'django.views.static.serve',
