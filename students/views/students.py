@@ -2,7 +2,7 @@
 
 from django.shortcuts import render
 from django.http import HttpResponse
-from ..models import Student
+from ..models.student import Student
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 # Views for Students
@@ -21,14 +21,14 @@ def students_list(request):
     paginator = Paginator(students, 3)
     page = request.GET.get('page')
     try:
-      students = paginator.page(page)
+        students = paginator.page(page)
     except PageNotAnInteger:
-    # If page is not an integer, deliver first page.
-      students = paginator.page(1)
+        # If page is not an integer, deliver first page.
+        students = paginator.page(1)
     except EmptyPage:
-    # If page is out of range (e.g. 9999), deliver
-    # last page of results.
-      students = paginator.page(paginator.num_pages)
+        # If page is out of range (e.g. 9999), deliver
+        # last page of results.
+        students = paginator.page(paginator.num_pages)
 
 
     return render(request, 'students/students_list.html', {'students': students})
