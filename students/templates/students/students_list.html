@@ -21,14 +21,7 @@
     <!-- geting from request GET dictionary "order_by"(defined in views/students)   -->
     <thead>
         <tr>
-        <th>
-            <a href="{% url "home" %}?order_by=id{% if order_by == 'id' and reverse != '1' %}&amp;reverse=1{% endif %}">
-            #
-            {% if order_by == 'id' and reverse != '1' %}&uarr;
-            {% elif order_by == 'id' and reverse == '1' %}&darr;
-             <!--    -->
-            {% endif %}
-        </th>
+        <th>#</th>
         <th>Фото</th>
         <th>
             <a href="{% url "home" %}?order_by=last_name{% if order_by == 'last_name' and reverse != '1' %}&amp;reverse=1{% endif %}">

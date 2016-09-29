@@ -2,9 +2,9 @@
 
 {% load static from staticfiles %}
 
-{% block meta_title %}Студенти{% endblock meta_title %}
+{% block meta_title %}Груп{% endblock meta_title %}
 
-{% block title %}Групи{% endblock title %}
+{% block title %}Список Груп{% endblock title %}
 
 {% block content %}
 
@@ -23,13 +23,7 @@
                     <!-- geting from request GET dictionary "order_by"(defined in views/students)   -->
                     <thead>
                         <tr>
-                            <th><a href="{% url "groups" %}?order_by=id{% if order_by == 'id' and reverse != '1' %}&amp;reverse=1{% endif %}">
-                            #
-                            {% if order_by == 'id' and reverse != '1' %}&uarr;
-                            {% elif order_by == 'id' and reverse == '1' %}&darr;
-                             <!--    -->
-                            {% endif %}
-                            </th>
+                            <th>#</th>
                             <th><a href="{% url "groups" %}?order_by=title{% if order_by == 'title' and reverse != '1' %}&amp;reverse=1{% endif %}">
                             Назва
                             {% if order_by == 'title' and reverse != '1' %}&uarr;

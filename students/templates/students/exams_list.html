@@ -1,0 +1,85 @@
+{% extends "students/base.html" %}
+
+{% load static from staticfiles %}
+
+{% block meta_title %}Іспити{% endblock meta_title %}
+
+{% block title %}Список Іспитів{% endblock title %}
+
+{% block content %}
+
+
+<!-- Add Student Button -->
+<h3><a class="btn btn-primary" href="{% url "students_add" %}">Додати Іспит</a></h3>
+
+
+
+<!-- Start Exams Listing -->
+<table class="table table-hover table-striped">
+    {% with order_by=request.GET.order_by reverse=request.GET.reverse %}
+    <!-- with tag for simple reading -->
+    <!-- geting from request GET dictionary "order_by"(defined in views/exams)   -->
+    <thead>
+        <tr>
+        <th>#</th>
+        <th><a href="{% url "exams" %}?order_by=subject{% if order_by == 'subject' and reverse != '1' %}&amp;reverse=1{% endif %}">
+            Назва Предмету
+            {% if order_by == 'subject' and reverse != '1' %}&uarr;
+            {% elif order_by == 'subject' and reverse == '1' %}&darr;
+            {% endif %}
+        </th>
+        <th><a href="{% url "exams" %}?order_by=date_time{% if order_by == 'date_time' and reverse != '1' %}&amp;reverse=1{% endif %}">
+            Дата проведення
+            {% if order_by == 'date_time' and reverse != '1' %}&uarr;
+            {% elif order_by == 'date_time' and reverse == '1' %}&darr;
+            {% endif %}
+        </th>
+        <th><a href="{% url "exams" %}?order_by=teacher{% if order_by == 'teacher' and reverse != '1' %}&amp;reverse=1{% endif %}">
+            Викладач
+            {% if order_by == 'teacher' and reverse != '1' %}&uarr;
+            {% elif order_by == 'teacher' and reverse == '1' %}&darr;
+            {% endif %}
+        </th>
+         <th><a href="{% url "exams" %}?order_by=exam_group{% if order_by == 'exam_group' and reverse != '1' %}&amp;reverse=1{% endif %}">
+            Група
+            {% if order_by == 'exam_group' and reverse != '1' %}&uarr;
+            {% elif order_by == 'exam_group' and reverse == '1' %}&darr;
+            {% endif %}
+        </th>
+        <th>Дії</th>
+        </tr>
+        </thead>
+        {% endwith %}
+                    <tbody>
+                        {% for exam in exams %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <!-- forloop.counter has number of for iterations starts from 1  -->
+                            <td><a href="{% url "exams_edit" exam.id %}"> {{ exam.subject }}</td>
+                            <td><a href="{% url "exams_edit" exam.id %}"> {{ exam.date_time }}</td>
+                            <td><a href="{% url "exams_edit" exam.id %}"> {{ exam.teacher }}</td>
+                            <td><a href="{% url "exams_edit" exam.id %}"> {{ exam.exam_group }}</td>
+                            <td>
+                                <div class="btn-group">
+                                    <button class="btn btn-default dropdown-toggle"
+                                        type="button" data-toggle="dropdown">Дія
+                                    <span class="caret"></span>
+                                    </button>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li><a href="{% url "exams_edit" exam.id %}" target="_blank">Редагувати</a></li>
+                                            <li><a href="{% url "exams_delete" exam.id %}">Видалити</a></li>
+                                        </ul>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+</table>
+<!-- End Exam Listing -->
+
+<!-- pagination -->
+{% include "students/includes/exams_pagination.html" %}
+
+
+
+{% endblock content %}

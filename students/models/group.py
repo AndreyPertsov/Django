@@ -22,8 +22,9 @@ class Group(models.Model):
         blank=True,
         null=True,
         on_delete=models.SET_NULL)
-    #OneToOneField(Model_name,
-    #on_delete - leader value when delete Student from Students
+
+        #OneToOneField(Model_name,
+        #on_delete - leader value when delete Student from Students
 
     notes = models.TextField(
         blank=True,
