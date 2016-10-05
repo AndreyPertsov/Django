@@ -1,0 +1,70 @@
+{% extends "students/base.html" %}
+
+{% load static from staticfiles %}
+
+{% block meta_title %}Сервіс Обліку Студентів{% endblock meta_title %}
+
+{% block title %}Форма редагування студента{% endblock title %}
+
+{% block content %}
+<form action="{% url "students_add" %}" method="post" enctype="multipart/form-data">
+{% csrf_token%}
+
+<div class="container">
+  <div class="row" id="forma">
+    <div class="col-sm-2" align="right"><label for="first_name">Им'я*</label></div>
+    <div class="col-sm-3"><input type="text" value="" name="first_name" id="first_name" class="form-control" placeholder="Іван"></div>
+    <div class="col-sm-7"></div>
+  </div>
+  <div class="row" id="forma">
+    <div class="col-sm-2" align="right"><label for="middle_name">По-батькові</label></div>
+    <div class="col-sm-3"><input type="text" value="" name="middle_name" id="middle_name" class="form-control" placeholder="Іванович"></div>
+    <div class="col-sm-7"></div>
+  </div>
+    <div class="row" id="forma">
+    <div class="col-sm-2" align="right"><label for="last_name">Прізвище*</label></div>
+    <div class="col-sm-3"><input type="text" value="" name="last_name" id="last_name" class="form-control" placeholder="Іванов"></div>
+    <div class="col-sm-7"></div>
+  </div>
+  <div class="row" id="forma">
+    <div class="col-sm-2" align="right"><label for="ticket">№ Білету</label></div>
+    <div class="col-sm-3"><input type="text" value="" name="ticket" id="ticket" class="form-control" placeholder="1251"></div>
+    <div class="col-sm-7"></div>
+  </div>
+  <div class="row" id="forma">
+    <div class="col-sm-2" align="right"><label for="birthday">Дата народження</label></div>
+    <div class="col-sm-3"><input type="text" value="" name="birthday" id="birthday" class="form-control" placeholder="1992-10-30"></div>
+    <div class="col-sm-7"></div>
+  </div>
+  <div class="row" id="forma">
+     <div class="col-sm-2" align="right"><label for="photo">Фото</label></div>
+     <div class="col-sm-3"><input type="file" value="" name="photo" id="photo"></div>
+     <div class="col-sm-7"></div>
+  </div>
+
+  <div class="row" id="forma">
+    <div class="col-sm-2" align="right"><label for="student_group">Групи</label></div>
+    <div class="col-sm-3"><select name="student_group" id="student_group" class="form-control">
+      <option value="">Виберіть групу</option>
+        {% for group in groups %}
+        <option value="{{ group.id }}">{{ group.title }}</option>
+        {% endfor %}
+      </select></div>
+     <div class="col-sm-7"></div>
+  </div>
+   <div class="row" id="forma">
+     <div class="col-sm-2" align="right"><label for="notes">Додатки</label></div>
+     <div class="col-sm-3"><textarea name="notes" id="notes" class="form-control" rows="3"></textarea></div>
+     <div class="col-sm-7"></div>
+  </div>
+  <div class="row" id="forma1">
+
+    <div class="col-sm-3"></div>
+    <button type="submit" class="btn btn-primary" name="add_button">Зберегти</button>
+    <button type="submit"class="btn btn-link" name="cancel_button">Скасувати</button></div>
+    <div class="col-sm-7"></div>
+  </div>
+</div>
+</form>
+
+{% endblock content %}

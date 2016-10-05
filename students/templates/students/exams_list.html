@@ -10,7 +10,7 @@
 
 
 <!-- Add Student Button -->
-<h3><a class="btn btn-primary" href="{% url "students_add" %}">Додати Іспит</a></h3>
+<h3><a class="btn btn-primary" href="{% url "exams_add" %}">Додати Іспит</a></h3>
 
 
 
@@ -23,7 +23,7 @@
         <tr>
         <th>#</th>
         <th><a href="{% url "exams" %}?order_by=subject{% if order_by == 'subject' and reverse != '1' %}&amp;reverse=1{% endif %}">
-            Назва Предмету
+            Назва предмету
             {% if order_by == 'subject' and reverse != '1' %}&uarr;
             {% elif order_by == 'subject' and reverse == '1' %}&darr;
             {% endif %}
@@ -52,15 +52,15 @@
         {% endwith %}
                     <tbody>
                         {% for exam in exams %}
-                        <tr>
+                           <tr>
                             <td>{{ forloop.counter }}</td>
                             <!-- forloop.counter has number of for iterations starts from 1  -->
                             <td><a href="{% url "exams_edit" exam.id %}"> {{ exam.subject }}</td>
                             <td><a href="{% url "exams_edit" exam.id %}"> {{ exam.date_time }}</td>
                             <td><a href="{% url "exams_edit" exam.id %}"> {{ exam.teacher }}</td>
                             <td><a href="{% url "exams_edit" exam.id %}"> {{ exam.exam_group }}</td>
-                            <td>
-                                <div class="btn-group">
+
+                            <td><div class="btn-group">
                                     <button class="btn btn-default dropdown-toggle"
                                         type="button" data-toggle="dropdown">Дія
                                     <span class="caret"></span>
