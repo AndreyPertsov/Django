@@ -4,66 +4,79 @@
 
 {% block meta_title %}Сервіс Обліку Студентів{% endblock meta_title %}
 
-{% block title %}Форма редагування студента{% endblock title %}
+{% block title %}Форма редагування студента {% endblock title %}
+
+{% block status_message %}
+    {% if errors %}
+        <div class="alert alert-warning" role="alert">
+        Будь-ласка, виправте наступні помилки
+        </div>
+    {% endif %}
+{% endblock status_message %}
 
 {% block content %}
-<form action="{% url "students_add" %}" method="post" enctype="multipart/form-data">
+<form action="{% url "students_add" %}" method="post" enctype="multipart/form-data" class="form-horizontal">
+
 {% csrf_token%}
 
 <div class="container">
-  <div class="row" id="forma">
-    <div class="col-sm-2" align="right"><label for="first_name">Им'я*</label></div>
-    <div class="col-sm-3"><input type="text" value="" name="first_name" id="first_name" class="form-control" placeholder="Іван"></div>
-    <div class="col-sm-7"></div>
+  <div class="row {% if errors.first_name %}has-error{% endif %}" id="forma" >
+    <div class="col-sm-2" align="right"><label for="first_name" class="control-label">Им'я*</label></div>
+    <div class="col-sm-4"><input type="text" value="{{ request.POST.first_name }}" name="first_name" id="first_name" class="form-control" placeholder="Іван"></div>
+    <div class="col-sm-6"><span class="help-block">{{ errors.first_name }}</span></div>
   </div>
   <div class="row" id="forma">
-    <div class="col-sm-2" align="right"><label for="middle_name">По-батькові</label></div>
-    <div class="col-sm-3"><input type="text" value="" name="middle_name" id="middle_name" class="form-control" placeholder="Іванович"></div>
-    <div class="col-sm-7"></div>
+    <div class="col-sm-2" align="right"><label for="middle_name" class="control-label">По-батькові</label></div>
+    <div class="col-sm-4"><input type="text" value="{{ request.POST.middle_name }}" name="middle_name" id="middle_name" class="form-control" placeholder="Іванович"></div>
+    <div class="col-sm-6"></div>
   </div>
-    <div class="row" id="forma">
-    <div class="col-sm-2" align="right"><label for="last_name">Прізвище*</label></div>
-    <div class="col-sm-3"><input type="text" value="" name="last_name" id="last_name" class="form-control" placeholder="Іванов"></div>
-    <div class="col-sm-7"></div>
+    <div class="row {% if errors.last_name %}has-error{% endif %}" id="forma">
+    <div class="col-sm-2" align="right"><label for="last_name" class="control-label">Прізвище*</label></div>
+    <div class="col-sm-4"><input type="text" value="{{ request.POST.last_name }}" name="last_name" id="last_name" class="form-control" placeholder="Іванов"></div>
+    <div class="col-sm-6"><span class="help-block">{{ errors.last_name }}</span></div>
   </div>
-  <div class="row" id="forma">
-    <div class="col-sm-2" align="right"><label for="ticket">№ Білету</label></div>
-    <div class="col-sm-3"><input type="text" value="" name="ticket" id="ticket" class="form-control" placeholder="1251"></div>
-    <div class="col-sm-7"></div>
+  <div class="row {% if errors.ticket %}has-error{% endif %}" id="forma">
+    <div class="col-sm-2" align="right"><label for="ticket" class="control-label">№ Білету</label></div>
+    <div class="col-sm-4"><input type="text" value="{{ request.POST.ticket }}" name="ticket" id="ticket" class="form-control" placeholder="1251"></div>
+    <div class="col-sm-6"><span class="help-block">{{ errors.ticket }}</span></div>
   </div>
-  <div class="row" id="forma">
-    <div class="col-sm-2" align="right"><label for="birthday">Дата народження</label></div>
-    <div class="col-sm-3"><input type="text" value="" name="birthday" id="birthday" class="form-control" placeholder="1992-10-30"></div>
-    <div class="col-sm-7"></div>
+  <div class="row {% if errors.birthday %}has-error{% endif %}" id="forma">
+    <div class="col-sm-2" align="right"><label for="birthday" class="control-label">Дата народження</label></div>
+    <div class="col-sm-4"><input type="text" value="{{ request.POST.birthday }}" name="birthday" id="birthday" class="form-control" placeholder="10.10.1992"></div>
+    <div class="col-sm-6"><span class="help-block">{{ errors.birthday }}</span></div>
   </div>
-  <div class="row" id="forma">
-     <div class="col-sm-2" align="right"><label for="photo">Фото</label></div>
-     <div class="col-sm-3"><input type="file" value="" name="photo" id="photo"></div>
-     <div class="col-sm-7"></div>
+  <div class="row {% if errors.photo %}has-error{% endif %}" id="forma">
+     <div class="col-sm-2" align="right"><label for="photo" class="control-label">Фото</label></div>
+     <div class="col-sm-4"><input type="file" value="{{ request.POST.photo }}" name="photo" id="photo"></div>
+     <div class="col-sm-6"><span class="help-block">{{ errors.photo }}</span></div>
   </div>
 
-  <div class="row" id="forma">
-    <div class="col-sm-2" align="right"><label for="student_group">Групи</label></div>
-    <div class="col-sm-3"><select name="student_group" id="student_group" class="form-control">
+  <div class="row {% if errors.student_group %}has-error{% endif %}" id="forma">
+    <div class="col-sm-2" align="right"><label for="student_group" class="control-label">Групи</label></div>
+    <div class="col-sm-4"><select name="student_group" id="student_group" class="form-control">
       <option value="">Виберіть групу</option>
         {% for group in groups %}
-        <option value="{{ group.id }}">{{ group.title }}</option>
+        <option value="{{ group.id }}" {% if group.id == request.POST.student_group|add:0 %}
+                selected="1"{% endif %}>{{ group.title }}</option>
         {% endfor %}
       </select></div>
-     <div class="col-sm-7"></div>
+     <div class="col-sm-6"><span class="help-block">{{ errors.student_group }}</span></div>
   </div>
-   <div class="row" id="forma">
-     <div class="col-sm-2" align="right"><label for="notes">Додатки</label></div>
-     <div class="col-sm-3"><textarea name="notes" id="notes" class="form-control" rows="3"></textarea></div>
-     <div class="col-sm-7"></div>
-  </div>
-  <div class="row" id="forma1">
 
-    <div class="col-sm-3"></div>
-    <button type="submit" class="btn btn-primary" name="add_button">Зберегти</button>
-    <button type="submit"class="btn btn-link" name="cancel_button">Скасувати</button></div>
-    <div class="col-sm-7"></div>
+    <div class="row" id="forma">
+     <div class="col-sm-2" align="right"><label for="notes" class="control-label">Додатки</label></div>
+     <div class="col-sm-4"><textarea name="notes" id="notes" class="form-control" rows="3"></textarea></div>
+     <div class="col-sm-6"></div>
   </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label"></label>
+        <div class="col-sm-10">
+        <input type="submit" value="Додати" name="add_button"
+        class="btn btn-primary" />
+        <button type="submit" name="cancel_button"
+        class="btn btn-link">Скасувати</button>
+        </div>
+    </div>
 </div>
 </form>
 
