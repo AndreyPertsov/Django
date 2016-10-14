@@ -8,6 +8,7 @@ from ..models.group import Group
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from datetime import datetime
 from PIL import Image
+from django.contrib import messages
 
 # Views for Students
 
@@ -34,9 +35,7 @@ def students_list(request):
         # last page of results.
         students = paginator.page(paginator.num_pages)
 
-
     return render(request, 'students/students_list.html', {'students': students})
-
 
 
 def students_add(request):
@@ -118,10 +117,12 @@ def students_add(request):
                 student = Student(**data)
                 student.save()
                 # redirect to students list
+                messages.success(request, u'Студента %s %s успішно додано!' % (student.first_name, student.last_name))
                 return HttpResponseRedirect(u'%s?status_message=Студента {0} {1} успішно додано!'.format
                                             (student.first_name, student.last_name) % reverse('home'))
 
             else:
+                messages.error(request, 'Будь-ласка, виправте наступні помилки')
                 # render form with errors and previous user input
                 return render(request, 'students/students_add.html',
                               {'groups': Group.objects.all().order_by('title'),
@@ -129,6 +130,7 @@ def students_add(request):
 
         elif request.POST.get('cancel_button') is not None:
             # redirect to home page on cancel button
+            messages.info(request, u'Додавання студента скасовано!')
             return HttpResponseRedirect(u'%s?status_message=Додавання студента скасовано!'
                                         % reverse('home'))
     else:

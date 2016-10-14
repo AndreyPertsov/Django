@@ -1,5 +1,6 @@
 {% load static from staticfiles %}
 
+
 <!DOCTYPE html>
 <html lang="uk">
 <head>
@@ -40,10 +41,16 @@
     <div class="row" id="sub-header">
         <div class="col-xs-12">
             <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" {% if request.path == '/' %} class="active" {% endif %}><a href= "{% url "home" %}">Студенти</a></li>
-                <li role="presentation" {% if '/journal' in request.path %} class="active" {% endif %}><a href="{% url "journal" %}">Відвідування</a></li>
-                <li role="presentation" {% if '/groups' in request.path %} class="active" {% endif %}><a href="{% url "groups" %}">Групи</a></li>
-                <li role="presentation" {% if '/exams' in request.path %} class="active" {% endif %}><a href="{% url "exams" %}">Іспити</a></li>
+                <li role="presentation" {% if request.path == '/' %} class="active"
+                {% endif %}><a href= "{% url "home" %}">Студенти</a></li>
+                <li role="presentation" {% if '/journal' in request.path %} class="active"
+                {% endif %}><a href="{% url "journal" %}">Відвідування</a></li>
+                <li role="presentation" {% if '/groups' in request.path %} class="active"
+                {% endif %}><a href="{% url "groups" %}">Групи</a></li>
+                <li role="presentation" {% if '/exams' in request.path %} class="active"
+                {% endif %}><a href="{% url "exams" %}">Іспити</a></li>
+                <li role="presentation" {% if '/contact-admin' in request.path %}class="active"
+                {% endif %}><a href="{% url "contact_admin" %}">Контакт</a></li>
             <!-- giving URL to request and check if URL in request(.path) make current tab active   -->
             </ul>
         </div>
@@ -55,13 +62,19 @@
 
             <!-- Status Message -->
             {% block status_message %}
-            {% if request.GET.status_message %}
-            <div class="alert alert-warning" role="alert">{{ request.GET.status_message }}</div>
+            {% if messages %}
+                {% for message in messages %}
+                 <div {% if message.info %}class="alert alert-info" {% else %}class="alert alert-success" {%endif %}role="alert">
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                </div>
+                {% endfor %}
             {% endif %}
-            {% endblock %}
+            {% endblock status_message %}
 
             <h2>{% block title %}{% endblock title %}</h2>
+
             {% block content %}{% endblock content %}
+
         </div>
     </div>
 
